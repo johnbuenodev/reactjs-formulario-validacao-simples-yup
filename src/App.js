@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import  UserSchema  from "./Validations/UserSchema";
 
 function App() {
+
+  const newUser = async (event) => {
+    event.preventDefault();
+    let formUser = {
+      name: event.target[0].value,
+      email: event.target[1].value,
+      password: event.target[2].value, 
+    }
+    console.log("Data: ");
+    console.log(formUser);
+    const isValid = await UserSchema.isValid(formUser);
+    console.log(isValid);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <form onSubmit={newUser}>
+      <input type="text" name="name" placeholder="John"/>
+      <input type="text"  name="email" placeholder="email@gmail.com"/>
+      <input type="password" name="password" placeholder="password123"/>
+      <button type="submit">Salvar</button>
+     </form>
     </div>
   );
 }
